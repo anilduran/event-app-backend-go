@@ -16,6 +16,9 @@ func SetupRoutes(r *gin.Engine) {
 	me.GET("/", GetMyCredentials)
 	me.PUT("/", UpdateMyCredentials)
 	me.GET("/events", GetMyEvents)
+	me.GET("/events/attended", GetMyAttendedEvents)
+	me.GET("/comments", GetMyComments)
+	me.GET("/locations", GetMyLocations)
 
 	user := r.Group("/api/users")
 	user.Use(middlewares.Auth)
@@ -32,6 +35,7 @@ func SetupRoutes(r *gin.Engine) {
 	category.POST("/", CreateCategory)
 	category.PUT("/:id", UpdateCategory)
 	category.DELETE("/:id", DeleteCategory)
+	category.GET("/:id/events", GetCategoryEvents)
 
 	event := r.Group("/api/events")
 	event.Use(middlewares.Auth)
@@ -40,7 +44,26 @@ func SetupRoutes(r *gin.Engine) {
 	event.POST("/", CreateEvent)
 	event.PUT("/:id", UpdateEvent)
 	event.DELETE("/:id", DeleteEvent)
+	event.GET("/:id/participants", GetEventParticipants)
+	event.GET("/:id/comments", GetEventComments)
 	event.POST("/:id/attend", AttendEvent)
 	event.DELETE("/:id/unattend", UnattendEvent)
+
+	comment := r.Group("/api/comments")
+	comment.Use(middlewares.Auth)
+	comment.GET("/", GetComments)
+	comment.GET("/:id", GetCommentByID)
+	comment.POST("/", CreateComment)
+	comment.PUT("/:id", UpdateComment)
+	comment.DELETE("/:id", DeleteComment)
+
+	location := r.Group("/api/locations")
+	location.Use(middlewares.Auth)
+	location.GET("/", GetLocations)
+	location.GET("/:id", GetLocationByID)
+	location.POST("/", CreateLocation)
+	location.PUT("/:id", UpdateLocation)
+	location.DELETE("/:id", DeleteLocation)
+	location.GET("/:id/events", GetLocationEvents)
 
 }

@@ -20,7 +20,7 @@ func InitializeDB() (err error) {
 		return
 	}
 
-	err = DB.AutoMigrate(models.User{}, models.Event{}, models.Category{})
+	err = DB.AutoMigrate(&models.User{}, &models.Event{}, &models.Category{}, &models.Location{}, &models.Comment{})
 
 	return
 

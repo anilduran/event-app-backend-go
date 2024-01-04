@@ -135,3 +135,31 @@ func DeleteCategory(c *gin.Context) {
 
 	c.JSON(http.StatusOK, category)
 }
+
+func GetCategoryEvents(c *gin.Context) {
+
+	id := c.Param("id")
+
+	var category models.Category
+
+	result := db.DB.First(&category, id)
+
+	if result.Error != nil {
+		c.Status(http.StatusInternalServerError)
+		return
+	}
+
+	var events []models.Event
+
+	err := db.DB.Model(&category).Association("Events").Find(&events)
+
+	if err != nil {
+		c.Status(http.StatusInternalServerError)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"data": events,
+	})
+
+}
