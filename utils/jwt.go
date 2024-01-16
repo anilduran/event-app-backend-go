@@ -3,6 +3,7 @@ package utils
 import (
 	"errors"
 	"os"
+	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -22,6 +23,7 @@ func GenerateToken(userId uint, email string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"userId": userId,
 		"email":  email,
+		"exp":    time.Now().Add(time.Hour * 24).Unix(), // this token will be expired in 24 hours
 	})
 
 	return token.SignedString(secret)
