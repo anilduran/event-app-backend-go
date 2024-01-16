@@ -6,6 +6,7 @@ import (
 	"example.com/event-app-backend-go/db"
 	"example.com/event-app-backend-go/models"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func GetCategories(c *gin.Context) {
@@ -31,7 +32,14 @@ func GetCategoryByID(c *gin.Context) {
 
 	id := c.Param("id")
 
-	result := db.DB.First(&category, id)
+	uuid, err := uuid.Parse(id)
+
+	if err != nil {
+		c.Status(http.StatusBadRequest)
+		return
+	}
+
+	result := db.DB.First(&category, uuid)
 
 	if result.Error != nil {
 		c.Status(http.StatusInternalServerError)
@@ -89,7 +97,14 @@ func UpdateCategory(c *gin.Context) {
 
 	var category models.Category
 
-	id := c.Param("id")
+	var id uuid.UUID
+
+	id, err = uuid.Parse(c.Param("id"))
+
+	if err != nil {
+		c.Status(http.StatusBadRequest)
+		return
+	}
 
 	result := db.DB.First(&category, id)
 
@@ -115,7 +130,12 @@ func UpdateCategory(c *gin.Context) {
 
 func DeleteCategory(c *gin.Context) {
 
-	id := c.Param("id")
+	id, err := uuid.Parse(c.Param("id"))
+
+	if err != nil {
+		c.Status(http.StatusBadRequest)
+		return
+	}
 
 	var category models.Category
 
@@ -138,7 +158,12 @@ func DeleteCategory(c *gin.Context) {
 
 func GetCategoryEvents(c *gin.Context) {
 
-	id := c.Param("id")
+	id, err := uuid.Parse(c.Param("id"))
+
+	if err != nil {
+		c.Status(http.StatusBadRequest)
+		return
+	}
 
 	var category models.Category
 
@@ -151,7 +176,7 @@ func GetCategoryEvents(c *gin.Context) {
 
 	var events []models.Event
 
-	err := db.DB.Model(&category).Association("Events").Find(&events)
+	err = db.DB.Model(&category).Association("Events").Find(&events)
 
 	if err != nil {
 		c.Status(http.StatusInternalServerError)

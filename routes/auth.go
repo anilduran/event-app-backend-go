@@ -29,7 +29,7 @@ func SignIn(c *gin.Context) {
 
 	result := db.DB.Where("email = ?", input.Email).First(&user)
 
-	if result.Error == nil {
+	if result.Error != nil {
 		c.Status(http.StatusInternalServerError)
 		return
 	}
