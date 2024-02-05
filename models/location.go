@@ -12,7 +12,7 @@ type Location struct {
 	Name        string     `json:"name"`
 	Description string     `json:"description"`
 	ImageUrl    string     `json:"image_url"`
-	CreatorID   uint       `json:"creator_id"`
+	CreatorID   uuid.UUID  `json:"creator_id"`
 	Latitude    float64    `json:"latitude"`
 	Longitude   float64    `json:"longitude"`
 	Events      []Event    `gorm:"foreignkey:LocationID"`

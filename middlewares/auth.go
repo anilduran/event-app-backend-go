@@ -26,7 +26,7 @@ func Auth(c *gin.Context) {
 		})
 	}
 
-	c.Set("userId", userId)
+	c.Set("userId", userId.String())
 
 	c.Next()
 }

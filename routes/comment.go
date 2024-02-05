@@ -6,6 +6,7 @@ import (
 	"example.com/event-app-backend-go/db"
 	"example.com/event-app-backend-go/models"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func GetComments(c *gin.Context) {
@@ -27,7 +28,12 @@ func GetCommentByID(c *gin.Context) {
 
 	var comment models.Comment
 
-	id := c.Param("id")
+	id, err := uuid.Parse(c.Param("id"))
+
+	if err != nil {
+		c.Status(http.StatusBadRequest)
+		return
+	}
 
 	result := db.DB.First(&comment, id)
 
@@ -43,8 +49,8 @@ func GetCommentByID(c *gin.Context) {
 func CreateComment(c *gin.Context) {
 
 	type CreateCommentInput struct {
-		Content string `form:"content" binding:"required"`
-		EventID uint   `form:"event_id" binding:"required"`
+		Content string    `form:"content" binding:"required"`
+		EventID uuid.UUID `form:"event_id" binding:"required"`
 	}
 
 	var input CreateCommentInput
@@ -56,7 +62,9 @@ func CreateComment(c *gin.Context) {
 		return
 	}
 
-	userId := c.GetUint("userId")
+	var userId uuid.UUID
+
+	userId, err = uuid.Parse(c.GetString("userId"))
 
 	comment := models.Comment{
 		Content: input.Content,

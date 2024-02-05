@@ -10,8 +10,8 @@ import (
 type Comment struct {
 	ID        uuid.UUID  `gorm:"type:uuid;primary_key;"`
 	Content   string     `json:"content"`
-	UserID    uint       `json:"user_id"`
-	EventID   uint       `json:"event_id"`
+	UserID    uuid.UUID  `json:"user_id"`
+	EventID   uuid.UUID  `json:"event_id"`
 	CreatedAt *time.Time `json:"created_at"`
 	UpdatedAt *time.Time `json:"updated_at"`
 	DeletedAt *time.Time `json:"deleted_at"`

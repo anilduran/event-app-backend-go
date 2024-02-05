@@ -6,6 +6,7 @@ import (
 	"example.com/event-app-backend-go/db"
 	"example.com/event-app-backend-go/models"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func GetEvents(c *gin.Context) {
@@ -58,7 +59,7 @@ func CreateEvent(c *gin.Context) {
 		return
 	}
 
-	userId := c.GetUint("userId")
+	userId, _ := uuid.Parse(c.GetString("userId"))
 
 	event := models.Event{
 		Name:        input.Name,
