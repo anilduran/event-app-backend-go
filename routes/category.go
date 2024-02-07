@@ -30,16 +30,9 @@ func GetCategoryByID(c *gin.Context) {
 
 	var category models.Category
 
-	id := c.Param("id")
+	id, _ := uuid.Parse(c.Param("id"))
 
-	uuid, err := uuid.Parse(id)
-
-	if err != nil {
-		c.Status(http.StatusBadRequest)
-		return
-	}
-
-	result := db.DB.First(&category, uuid)
+	result := db.DB.First(&category, id)
 
 	if result.Error != nil {
 		c.Status(http.StatusInternalServerError)
@@ -97,14 +90,7 @@ func UpdateCategory(c *gin.Context) {
 
 	var category models.Category
 
-	var id uuid.UUID
-
-	id, err = uuid.Parse(c.Param("id"))
-
-	if err != nil {
-		c.Status(http.StatusBadRequest)
-		return
-	}
+	id, _ := uuid.Parse(c.Param("id"))
 
 	result := db.DB.First(&category, id)
 
@@ -130,12 +116,7 @@ func UpdateCategory(c *gin.Context) {
 
 func DeleteCategory(c *gin.Context) {
 
-	id, err := uuid.Parse(c.Param("id"))
-
-	if err != nil {
-		c.Status(http.StatusBadRequest)
-		return
-	}
+	id, _ := uuid.Parse(c.Param("id"))
 
 	var category models.Category
 
@@ -158,12 +139,7 @@ func DeleteCategory(c *gin.Context) {
 
 func GetCategoryEvents(c *gin.Context) {
 
-	id, err := uuid.Parse(c.Param("id"))
-
-	if err != nil {
-		c.Status(http.StatusBadRequest)
-		return
-	}
+	id, _ := uuid.Parse(c.Param("id"))
 
 	var category models.Category
 
@@ -176,7 +152,7 @@ func GetCategoryEvents(c *gin.Context) {
 
 	var events []models.Event
 
-	err = db.DB.Model(&category).Association("Events").Find(&events)
+	err := db.DB.Model(&category).Association("Events").Find(&events)
 
 	if err != nil {
 		c.Status(http.StatusInternalServerError)

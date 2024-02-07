@@ -7,6 +7,7 @@ import (
 	"example.com/event-app-backend-go/models"
 	"example.com/event-app-backend-go/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func GetUsers(c *gin.Context) {
@@ -30,7 +31,7 @@ func GetUserByID(c *gin.Context) {
 
 	var user models.User
 
-	id := c.Param("id")
+	id, _ := uuid.Parse(c.Param("id"))
 
 	result := db.DB.First(&user, id)
 
@@ -95,7 +96,7 @@ func UpdateUser(c *gin.Context) {
 		return
 	}
 
-	id := c.Param("id")
+	id, _ := uuid.Parse(c.Param("id"))
 
 	var user models.User
 
@@ -132,7 +133,7 @@ func UpdateUser(c *gin.Context) {
 
 func DeleteUser(c *gin.Context) {
 
-	id := c.Param("id")
+	id, _ := uuid.Parse(c.Param("id"))
 
 	var user models.User
 

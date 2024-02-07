@@ -30,7 +30,7 @@ func GetLocationByID(c *gin.Context) {
 
 	var location models.Location
 
-	id := c.Param("id")
+	id, _ := uuid.Parse(c.Param("id"))
 
 	result := db.DB.First(&location, id)
 
@@ -103,7 +103,7 @@ func UpdateLocation(c *gin.Context) {
 
 	var location models.Location
 
-	id := c.Param("id")
+	id, _ := uuid.Parse(c.Param("id"))
 
 	result := db.DB.First(&location, id)
 
@@ -145,7 +145,7 @@ func UpdateLocation(c *gin.Context) {
 
 func DeleteLocation(c *gin.Context) {
 
-	id := c.Param("id")
+	id, _ := uuid.Parse(c.Param("id"))
 
 	var location models.Location
 
@@ -169,7 +169,7 @@ func DeleteLocation(c *gin.Context) {
 
 func GetLocationEvents(c *gin.Context) {
 
-	id := c.Param("id")
+	id, _ := uuid.Parse(c.Param("id"))
 
 	var location models.Location
 

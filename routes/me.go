@@ -7,11 +7,12 @@ import (
 	"example.com/event-app-backend-go/models"
 	"example.com/event-app-backend-go/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func GetMyCredentials(c *gin.Context) {
 
-	id := c.GetUint("userId")
+	id, _ := uuid.Parse(c.GetString("userId"))
 
 	var user models.User
 
@@ -43,7 +44,7 @@ func UpdateMyCredentials(c *gin.Context) {
 		return
 	}
 
-	id := c.GetUint("userId")
+	id, _ := uuid.Parse(c.GetString("userId"))
 
 	var user models.User
 
@@ -80,7 +81,7 @@ func UpdateMyCredentials(c *gin.Context) {
 
 func GetMyEvents(c *gin.Context) {
 
-	id := c.GetUint("userId")
+	id, _ := uuid.Parse(c.GetString("userId"))
 
 	var events []models.Event
 
@@ -97,7 +98,7 @@ func GetMyEvents(c *gin.Context) {
 
 func GetMyAttendedEvents(c *gin.Context) {
 
-	id := c.GetUint("userId")
+	id, _ := uuid.Parse(c.GetString("userId"))
 
 	var user models.User
 
@@ -123,7 +124,7 @@ func GetMyAttendedEvents(c *gin.Context) {
 
 func GetMyComments(c *gin.Context) {
 
-	id := c.GetUint("userId")
+	id, _ := uuid.Parse(c.GetString("userId"))
 
 	var user models.User
 
@@ -149,7 +150,7 @@ func GetMyComments(c *gin.Context) {
 
 func GetMyLocations(c *gin.Context) {
 
-	id := c.GetUint("userId")
+	id, _ := uuid.Parse(c.GetString("userId"))
 
 	var user models.User
 

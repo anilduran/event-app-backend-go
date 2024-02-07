@@ -29,7 +29,7 @@ func GetEventByID(c *gin.Context) {
 
 	var event models.Event
 
-	id := c.Param("id")
+	id, _ := uuid.Parse(c.Param("id"))
 
 	result := db.DB.First(&event, id)
 
@@ -96,7 +96,7 @@ func UpdateEvent(c *gin.Context) {
 		return
 	}
 
-	id := c.Param("id")
+	id, _ := uuid.Parse(c.Param("id"))
 
 	var event models.Event
 
@@ -131,7 +131,7 @@ func UpdateEvent(c *gin.Context) {
 
 func DeleteEvent(c *gin.Context) {
 
-	id := c.Param("id")
+	id, _ := uuid.Parse(c.Param("id"))
 
 	var event models.Event
 
@@ -155,7 +155,7 @@ func DeleteEvent(c *gin.Context) {
 
 func AttendEvent(c *gin.Context) {
 
-	id := c.Param("id")
+	id, _ := uuid.Parse(c.Param("id"))
 
 	var event models.Event
 
@@ -166,7 +166,7 @@ func AttendEvent(c *gin.Context) {
 		return
 	}
 
-	userId := c.GetUint("userId")
+	userId, _ := uuid.Parse(c.GetString("userId"))
 
 	var user models.User
 
@@ -190,7 +190,7 @@ func AttendEvent(c *gin.Context) {
 
 func UnattendEvent(c *gin.Context) {
 
-	id := c.Param("id")
+	id, _ := uuid.Parse(c.Param("id"))
 
 	var event models.Event
 
@@ -201,7 +201,7 @@ func UnattendEvent(c *gin.Context) {
 		return
 	}
 
-	userId := c.GetUint("userId")
+	userId, _ := uuid.Parse(c.GetString("userId"))
 
 	var user models.User
 
@@ -225,7 +225,7 @@ func UnattendEvent(c *gin.Context) {
 
 func GetEventParticipants(c *gin.Context) {
 
-	id := c.Param("id")
+	id, _ := uuid.Parse(c.Param("id"))
 
 	var event models.Event
 
@@ -251,7 +251,7 @@ func GetEventParticipants(c *gin.Context) {
 
 func GetEventComments(c *gin.Context) {
 
-	id := c.Param("id")
+	id, _ := uuid.Parse(c.Param("id"))
 
 	var event models.Event
 

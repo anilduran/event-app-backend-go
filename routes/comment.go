@@ -62,9 +62,7 @@ func CreateComment(c *gin.Context) {
 		return
 	}
 
-	var userId uuid.UUID
-
-	userId, err = uuid.Parse(c.GetString("userId"))
+	userId, _ := uuid.Parse(c.GetString("userId"))
 
 	comment := models.Comment{
 		Content: input.Content,
