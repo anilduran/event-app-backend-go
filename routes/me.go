@@ -175,3 +175,21 @@ func GetMyLocations(c *gin.Context) {
 	})
 
 }
+
+func GetPresignedUrl(c *gin.Context) {
+
+	id, _ := uuid.Parse(c.GetString("userId"))
+
+	url, key, err := utils.PresignerInstance.PutObject(id.String())
+
+	if err != nil {
+		c.Status(http.StatusInternalServerError)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"url": url,
+		"key": key,
+	})
+
+}

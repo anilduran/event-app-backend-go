@@ -47,7 +47,7 @@ func CreateLocation(c *gin.Context) {
 	type CreateLocationInput struct {
 		Name        string  `form:"name" binding:"required"`
 		Description string  `form:"description" binding:"required"`
-		ImageUrl    string  `form:"image_url" binding:"required"`
+		ImageUrl    string  `form:"imageUrl" binding:"required"`
 		Latitude    float64 `form:"latitude" binding:"required"`
 		Longitude   float64 `form:"longitude" binding:"required"`
 	}
@@ -87,7 +87,7 @@ func UpdateLocation(c *gin.Context) {
 	type UpdateLocationInput struct {
 		Name        string  `form:"name"`
 		Description string  `form:"description"`
-		ImageUrl    string  `form:"image_url"`
+		ImageUrl    string  `form:"imageUrl"`
 		Latitude    float64 `form:"latitude"`
 		Longitude   float64 `form:"longitude"`
 	}

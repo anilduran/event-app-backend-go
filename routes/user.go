@@ -47,9 +47,10 @@ func GetUserByID(c *gin.Context) {
 func CreateUser(c *gin.Context) {
 
 	type CreateUserInput struct {
-		Username string `form:"username" binding:"required"`
-		Email    string `form:"email" binding:"required"`
-		Password string `form:"password" binding:"required"`
+		Username        string `form:"username" binding:"required"`
+		Email           string `form:"email" binding:"required"`
+		Password        string `form:"password" binding:"required"`
+		ProfilePhotoUrl string `form:"profilePhotoUrl"`
 	}
 
 	var input CreateUserInput
@@ -61,12 +62,17 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
-	var user models.User
-
-	user.Username = input.Username
-	user.Email = input.Email
 	hashedPassword := utils.HashPassword(input.Password)
-	user.Password = hashedPassword
+
+	user := models.User{
+		Username: input.Username,
+		Email:    input.Email,
+		Password: hashedPassword,
+	}
+
+	if input.ProfilePhotoUrl != "" {
+		user.ProfilePhotoUrl = input.ProfilePhotoUrl
+	}
 
 	result := db.DB.Create(&user)
 
@@ -82,9 +88,10 @@ func CreateUser(c *gin.Context) {
 func UpdateUser(c *gin.Context) {
 
 	type UpdateUserInput struct {
-		Username string `form:"username"`
-		Email    string `form:"email"`
-		Password string `form:"password"`
+		Username        string `form:"username"`
+		Email           string `form:"email"`
+		Password        string `form:"password"`
+		ProfilePhotoUrl string `form:"profilePhotoUrl"`
 	}
 
 	var input UpdateUserInput
@@ -118,6 +125,10 @@ func UpdateUser(c *gin.Context) {
 	if input.Password != "" {
 		hashedPassword := utils.HashPassword(input.Password)
 		user.Password = hashedPassword
+	}
+
+	if input.ProfilePhotoUrl != "" {
+		user.ProfilePhotoUrl = input.ProfilePhotoUrl
 	}
 
 	result = db.DB.Save(&user)

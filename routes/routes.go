@@ -19,6 +19,7 @@ func SetupRoutes(r *gin.Engine) {
 	me.GET("/events/attended", GetMyAttendedEvents)
 	me.GET("/comments", GetMyComments)
 	me.GET("/locations", GetMyLocations)
+	me.GET("/presigned-url", GetPresignedUrl)
 
 	user := r.Group("/api/users")
 	user.Use(middlewares.Auth)

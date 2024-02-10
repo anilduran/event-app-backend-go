@@ -48,6 +48,7 @@ func CreateEvent(c *gin.Context) {
 		Name        string `form:"name" binding:"required"`
 		Description string `form:"description" binding:"required"`
 		Capacity    uint   `form:"capacity" binding:"required"`
+		ImageUrl    string `form:"imageUrl" binding:"required"`
 	}
 
 	var input CreateEventInput
@@ -66,6 +67,7 @@ func CreateEvent(c *gin.Context) {
 		Description: input.Description,
 		Capacity:    input.Capacity,
 		CreatorID:   userId,
+		ImageUrl:    input.ImageUrl,
 	}
 
 	result := db.DB.Create(&event)
@@ -85,6 +87,7 @@ func UpdateEvent(c *gin.Context) {
 		Name        string `form:"name"`
 		Description string `form:"description"`
 		Capacity    uint   `form:"capacity"`
+		ImageUrl    string `form:"imageUrl"`
 	}
 
 	var input UpdateEvent
@@ -117,6 +120,10 @@ func UpdateEvent(c *gin.Context) {
 
 	if event.Capacity != 0 {
 		event.Capacity = input.Capacity
+	}
+
+	if event.ImageUrl != "" {
+		event.ImageUrl = input.ImageUrl
 	}
 
 	result = db.DB.Save(&event)
